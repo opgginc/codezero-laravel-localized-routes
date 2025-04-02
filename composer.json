@@ -25,12 +25,12 @@
         "codezero/composer-preload-files": "^1.0",
         "codezero/laravel-uri-translator": "^2.0",
         "codezero/php-url-builder": "^1.0",
-        "illuminate/support": "^10.0|^11.0"
+        "illuminate/support": "^10.0|^11.0|^12.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.3.3",
-        "orchestra/testbench": "^8.0|^9.0",
-        "phpunit/phpunit": "^10.5"
+        "orchestra/testbench": "^8.0|^9.0|^10.0",
+        "phpunit/phpunit": "^10.5|^11.5.3"
     },
     "scripts": {
         "test": "phpunit"

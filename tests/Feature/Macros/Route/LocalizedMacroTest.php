@@ -94,9 +94,20 @@ final class LocalizedMacroTest extends TestCase
             Route::get('{slug}', function () {});
         });
 
+        $routesArray = Route::getRoutes()->getRoutes();
+
+        // Laravel 12 introduces a new route for storage path. Remove that route from the collection.
+        if (isset($routesArray[0]) && $routesArray[0]->uri === 'storage/{path}') {
+            array_shift($routesArray);
+        }
+
+        $routeUriArray = array_map(function ($route) {
+            return $route->uri;
+        }, $routesArray);
+
         $this->assertEquals(
             ['nl', 'nl/{slug}', '/', '{slug}'],
-            $this->getRoutes()->pluck('uri')->toArray()
+            $routeUriArray
         );
     }
 
@@ -113,13 +124,18 @@ final class LocalizedMacroTest extends TestCase
                 ->name('home');
         });
 
-        $routes = $this->getRoutes();
+        $routesArray = Route::getRoutes()->getRoutes();
 
-        $route = $routes->first();
+        // Laravel 12 introduces a new route for storage path. Remove that route from the collection.
+        if (isset($routesArray[0]) && $routesArray[0]->uri === 'storage/{path}') {
+            array_shift($routesArray);
+        }
+
+        $route = $routesArray[0];
         $this->assertEquals('en.home', $route->action['as']);
         $this->assertEquals('english', $route->uri);
 
-        $route = $routes->last();
+        $route = $routesArray[1];
         $this->assertEquals('nl.home', $route->action['as']);
         $this->assertEquals('dutch', $route->uri);
     }
@@ -138,9 +154,20 @@ final class LocalizedMacroTest extends TestCase
             Route::get('{slug}', function () {});
         });
 
+        $routesArray = Route::getRoutes()->getRoutes();
+
+        // Laravel 12 introduces a new route for storage path. Remove that route from the collection.
+        if (isset($routesArray[0]) && $routesArray[0]->uri === 'storage/{path}') {
+            array_shift($routesArray);
+        }
+
+        $routeUriArray = array_map(function ($route) {
+            return $route->uri;
+        }, $routesArray);
+
         $this->assertEquals(
             ['dutch', 'dutch/{slug}', '/', '{slug}'],
-            $this->getRoutes()->pluck('uri')->toArray()
+            $routeUriArray
         );
     }
 
@@ -157,14 +184,19 @@ final class LocalizedMacroTest extends TestCase
                 ->name('home');
         });
 
-        $routes = $this->getRoutes();
+        $routesArray = Route::getRoutes()->getRoutes();
 
-        $route = $routes->first();
+        // Laravel 12 introduces a new route for storage path. Remove that route from the collection.
+        if (isset($routesArray[0]) && $routesArray[0]->uri === 'storage/{path}') {
+            array_shift($routesArray);
+        }
+
+        $route = $routesArray[0];
         $this->assertEquals('english-domain.com', $route->action['domain']);
         $this->assertEquals('en.home', $route->action['as']);
         $this->assertEquals('/', $route->uri);
 
-        $route = $routes->last();
+        $route = $routesArray[1];
         $this->assertEquals('dutch-domain.com', $route->action['domain']);
         $this->assertEquals('nl.home', $route->action['as']);
         $this->assertEquals('/', $route->uri);
@@ -184,26 +216,31 @@ final class LocalizedMacroTest extends TestCase
             Route::get('{slug}', function () {})->name('catch-all');
         });
 
-        $routes = $this->getRoutes();
+        $routesArray = Route::getRoutes()->getRoutes();
 
-        $this->assertCount(4, $routes);
+        // Laravel 12 introduces a new route for storage path. Remove that route from the collection.
+        if (isset($routesArray[0]) && $routesArray[0]->uri === 'storage/{path}') {
+            array_shift($routesArray);
+        }
 
-        $route = $routes[0];
+        $this->assertCount(4, $routesArray);
+
+        $route = $routesArray[0];
         $this->assertEquals('english-domain.com', $route->action['domain']);
         $this->assertEquals('en.home', $route->action['as']);
         $this->assertEquals('/', $route->uri);
 
-        $route = $routes[1];
+        $route = $routesArray[1];
         $this->assertEquals('english-domain.com', $route->action['domain']);
         $this->assertEquals('en.catch-all', $route->action['as']);
         $this->assertEquals('{slug}', $route->uri);
 
-        $route = $routes[2];
+        $route = $routesArray[2];
         $this->assertEquals('dutch-domain.com', $route->action['domain']);
         $this->assertEquals('nl.home', $route->action['as']);
         $this->assertEquals('/', $route->uri);
 
-        $route = $routes[3];
+        $route = $routesArray[3];
         $this->assertEquals('dutch-domain.com', $route->action['domain']);
         $this->assertEquals('nl.catch-all', $route->action['as']);
         $this->assertEquals('{slug}', $route->uri);
@@ -225,21 +262,26 @@ final class LocalizedMacroTest extends TestCase
             'supported_locales' => ['en', 'nl', 'de'],
         ]);
 
-        $routes = $this->getRoutes();
+        $routesArray = Route::getRoutes()->getRoutes();
 
-        $this->assertCount(3, $routes);
+        // Laravel 12 introduces a new route for storage path. Remove that route from the collection.
+        if (isset($routesArray[0]) && $routesArray[0]->uri === 'storage/{path}') {
+            array_shift($routesArray);
+        }
 
-        $route = $routes[0];
+        $this->assertCount(3, $routesArray);
+
+        $route = $routesArray[0];
         $this->assertEquals('nl', $route->action['localized-routes-locale']);
         $this->assertEquals('nl.scoped', $route->action['as']);
         $this->assertEquals('nl/with-scoped-config', $route->uri);
 
-        $route = $routes[1];
+        $route = $routesArray[1];
         $this->assertEquals('de', $route->action['localized-routes-locale']);
         $this->assertEquals('de.scoped', $route->action['as']);
         $this->assertEquals('de/with-scoped-config', $route->uri);
 
-        $route = $routes[2];
+        $route = $routesArray[2];
         $this->assertEquals('en', $route->action['localized-routes-locale']);
         $this->assertEquals('en.scoped', $route->action['as']);
         $this->assertEquals('with-scoped-config', $route->uri);

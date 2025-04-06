@@ -1,16 +1,18 @@
 # Laravel Localized Routes
 
-[![GitHub release](https://img.shields.io/github/release/codezero-be/laravel-localized-routes.svg?style=flat-square)](https://github.com/codezero-be/laravel-localized-routes/releases)
-[![Laravel](https://img.shields.io/badge/laravel-11-red?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com)
-[![License](https://img.shields.io/packagist/l/codezero/laravel-localized-routes.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/codezero-be/laravel-localized-routes/run-tests.yml?style=flat-square&logo=github&logoColor=white&label=tests)](https://github.com/codezero-be/laravel-localized-routes/actions)
-[![Code Coverage](https://img.shields.io/codacy/coverage/a5db8a1321664e67900c96eadc575ece/master?style=flat-square)](https://app.codacy.com/gh/codezero-be/laravel-localized-routes)
-[![Code Quality](https://img.shields.io/codacy/grade/a5db8a1321664e67900c96eadc575ece/master?style=flat-square)](https://app.codacy.com/gh/codezero-be/laravel-localized-routes)
-[![Total Downloads](https://img.shields.io/packagist/dt/codezero/laravel-localized-routes.svg?style=flat-square)](https://packagist.org/packages/codezero/laravel-localized-routes)
+[![GitHub release](https://img.shields.io/github/release/opgginc/codezero-laravel-localized-routes.svg?style=flat-square)](https://github.com/opgginc/codezero-laravel-localized-routes/releases)
+[![Laravel](https://img.shields.io/badge/laravel-12-red?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com)
+[![License](https://img.shields.io/packagist/l/opgginc/codezero-laravel-localized-routes.svg?style=flat-square)](LICENSE.md)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/opgginc/codezero-laravel-localized-routes/run-tests.yml?style=flat-square&logo=github&logoColor=white&label=tests)](https://github.com/opgginc/codezero-laravel-localized-routes/actions)
+[![Total Downloads](https://img.shields.io/packagist/dt/opgginc/codezero-laravel-localized-routes.svg?style=flat-square)](https://packagist.org/packages/opgginc/codezero-laravel-localized-routes)
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R3UQ8V)
 
 A convenient way to set up and use localized routes in a Laravel app.
+
+## Important Note
+
+This package is a fork of the original [codezero/laravel-localized-routes](https://github.com/codezero-be/laravel-localized-routes) created by Ivan Vermeyen. It was forked by OP.GG Inc. to maintain and extend its functionality after the unfortunate passing of Ivan. We are deeply grateful for Ivan's contribution to the Laravel community and hope to honor his legacy by continuing to maintain this package. Rest in peace, Ivan.
 
 ## 📖 Table of Contents
 
@@ -53,8 +55,8 @@ A convenient way to set up and use localized routes in a Laravel app.
 
 ## ✅ Requirements
 
-- PHP >= 8.1
-- Laravel >= 10
+- PHP >= 8.1, >= 8.4
+- Laravel >= 10, >= 12
 - Composer ^2.3 (for [codezero/composer-preload-files](https://github.com/codezero-be/composer-preload-files))
 
 ## ⬆ Upgrade
@@ -67,7 +69,7 @@ Check our [upgrade guide](UPGRADE.md) for instructions.
 Install this package with Composer:
 
 ```bash
-composer require codezero/laravel-localized-routes
+composer require opgginc/codezero-laravel-localized-routes
 ```
 
 Laravel will automatically register the ServiceProvider.
@@ -159,7 +161,7 @@ Make sure to add it after `StartSession` and before `SubstituteBindings`.
 The order of the middleware is important if you are using localized route keys (translated slugs)!
 The session needs to be active when setting the locale, and the locale needs to be set when substituting the route bindings.
 
-### Laravel 11 and newer:
+### Laravel 11 and 12:
 
 Add the middleware to the `web` middleware group in `bootstrap/app.php`.
 
@@ -304,7 +306,7 @@ public function resolveRouteBinding($value, $field = null)
 
 ### ☑ Translate Hard-Coded URI Slugs
 
-This package includes [codezero/laravel-uri-translator](https://github.com/codezero-be/laravel-uri-translator).
+This package includes [opgginc/codezero-laravel-uri-translator](https://github.com/opgginc/codezero-laravel-uri-translator).
 This registers a `Lang::uri()` macro that enables you to translate individual, hard-coded URI slugs.
 Route parameters will not be translated by this macro.
 
@@ -752,16 +754,17 @@ composer test
 ## ☕ Credits
 
 - [Ivan Vermeyen](https://github.com/ivanvermeyen)
-- [All contributors](https://github.com/codezero-be/laravel-localized-routes/contributors)
+- [OP.GG Inc.](https://github.com/opgginc)
+- [All contributors](https://github.com/opgginc/codezero-laravel-localized-routes/contributors)
 
 ## 🔒 Security
 
-If you discover any security related issues, please [e-mail me](mailto:ivan@codezero.be) instead of using the issue tracker.
+If you discover any security related issues, please contact us via GitHub issues.
 
 ## 📑 Changelog
 
 A complete list of all notable changes to this package can be found on the
-[releases page](https://github.com/codezero-be/laravel-localized-routes/releases).
+[releases page](https://github.com/opgginc/codezero-laravel-localized-routes/releases).
 
 ## 📜 License
 

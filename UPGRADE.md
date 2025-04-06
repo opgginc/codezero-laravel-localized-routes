@@ -1,13 +1,35 @@
 # Upgrade Guide
 
+## Upgrading To 5.0 From 4.x
+
+### ➡ Package Name Changed
+
+The package name has been changed from `codezero/laravel-localized-routes` to `opgginc/codezero-laravel-localized-routes`.
+
+🔸 **Actions Required**
+
+- Update the package using Composer: `composer require opgginc/codezero-laravel-localized-routes`
+
+### ➡ Added Support for Laravel 12 and PHP 8.4
+
+This package now supports Laravel 12 and PHP 8.4.
+
+- The dependency `codezero/laravel-uri-translator` has been replaced with `opgginc/codezero-laravel-uri-translator`.
+
+🔸 **Actions Required**
+
+- If you are directly using `codezero/laravel-uri-translator`, update it to `opgginc/codezero-laravel-uri-translator`.
+
+---
+
 ## Upgrading To 4.0 From 3.x
 
 ### ➡ Minimum Requirements Updated
 
-Due to PHP and PHPUnit version constraints with Laravel 11, we dropped support for Laravel 7.x, 8.x and 9.x.
+Due to PHP and PHPUnit version constraints with Laravel 11+, we dropped support for Laravel 7.x, 8.x and 9.x.
 
-- The minimum PHP version required is now 8.1
-- The minimum Laravel version required is now 10
+- The minimum PHP version required is now 8.1 (and supports PHP 8.4)
+- The minimum Laravel version required is now 10 (and supports Laravel 12)
 
 ---
 
@@ -18,7 +40,7 @@ This is now handled in `bootstrap/app.php`.
 
 🔸 **Actions Required**
 
-If you use Laravel 11, register the middleware in `bootstrap/app.php` as described in the README.
+If you use Laravel 11 or 12, register the middleware in `bootstrap/app.php` as described in the README.
 
 ## Upgrading To 3.0 From 2.x
 

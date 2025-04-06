@@ -1,0 +1,22 @@
+# Laravel Localized Routes - Claude Guide
+
+## Commands
+- Run all tests: `composer test`
+- Run single test: `./vendor/bin/phpunit --filter=TestName`
+- Run test suite: `./vendor/bin/phpunit --testsuite=Unit` or `--testsuite=Feature`
+
+## Code Style
+- PSR-4 autoloading standard with `CodeZero\LocalizedRoutes\` namespace
+- Method visibility: public methods first, then protected, then private
+- DocBlocks for all methods with `@return` types
+- Type hints for method parameters and return types where possible
+- Protected properties with descriptive names
+- Explicit imports (no group imports)
+- Laravel naming conventions for classes and methods
+- Error handling through exceptions with descriptive messages
+
+## Development
+- PHP 8.1+ required
+- Laravel 10+ compatibility maintained
+- Tests cover all functionality
+- Follows semantic versioning

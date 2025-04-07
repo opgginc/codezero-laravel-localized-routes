@@ -6,8 +6,6 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/opgginc/codezero-laravel-localized-routes/run-tests.yml?style=flat-square&logo=github&logoColor=white&label=tests)](https://github.com/opgginc/codezero-laravel-localized-routes/actions)
 [![Total Downloads](https://img.shields.io/packagist/dt/opgginc/codezero-laravel-localized-routes.svg?style=flat-square)](https://packagist.org/packages/opgginc/codezero-laravel-localized-routes)
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R3UQ8V)
-
 A convenient way to set up and use localized routes in a Laravel app.
 
 ## Important Note

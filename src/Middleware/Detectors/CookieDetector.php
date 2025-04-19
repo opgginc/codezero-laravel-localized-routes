@@ -15,7 +15,10 @@ class CookieDetector implements Detector
     public function detect()
     {
         $key = Config::get('localized-routes.cookie_name');
-
-        return Cookie::get($key);
+        if (Config::get('localized-routes.check_raw_cookie')) {
+            return $_COOKIE[$key] ?? null;
+        } else {
+            return Cookie::get($key);
+        }
     }
 }

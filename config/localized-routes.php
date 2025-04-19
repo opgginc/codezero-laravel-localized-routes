@@ -72,6 +72,11 @@ return [
     'cookie_minutes' => 60 * 24 * 365, // 1 year
 
     /**
+     * Check raw cookie with $_COOKIE due to the default encryption by Laravel.
+     */
+    'check_raw_cookie' => false,
+
+    /**
      * The detectors to use to find a matching locale.
      * These will be executed in the order that they are added to the array!
      */

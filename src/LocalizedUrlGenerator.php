@@ -48,7 +48,7 @@ class LocalizedUrlGenerator
      *
      * @return string
      */
-    public function generateFromRequest(string $locale = null, $parameters = null, bool $absolute = true, bool $keepQuery = true): string
+    public function generateFromRequest(?string $locale = null, $parameters = null, bool $absolute = true, bool $keepQuery = true): string
     {
         $urlBuilder = UrlBuilder::make($this->request->fullUrl());
         $requestQueryString = $urlBuilder->getQuery();

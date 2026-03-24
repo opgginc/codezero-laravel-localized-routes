@@ -1,7 +1,7 @@
 # Laravel Localized Routes
 
 [![GitHub release](https://img.shields.io/github/release/opgginc/codezero-laravel-localized-routes.svg?style=flat-square)](https://github.com/opgginc/codezero-laravel-localized-routes/releases)
-[![Laravel](https://img.shields.io/badge/laravel-12-red?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com)
+[![Laravel](https://img.shields.io/badge/laravel-13-red?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com)
 [![License](https://img.shields.io/packagist/l/opgginc/codezero-laravel-localized-routes.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/opgginc/codezero-laravel-localized-routes/run-tests.yml?style=flat-square&logo=github&logoColor=white&label=tests)](https://github.com/opgginc/codezero-laravel-localized-routes/actions)
 [![Total Downloads](https://img.shields.io/packagist/dt/opgginc/codezero-laravel-localized-routes.svg?style=flat-square)](https://packagist.org/packages/opgginc/codezero-laravel-localized-routes)
@@ -53,8 +53,8 @@ This package is a fork of the original [codezero/laravel-localized-routes](https
 
 ## ✅ Requirements
 
-- PHP >= 8.1, >= 8.4
-- Laravel >= 10, >= 12
+- PHP >= 8.1
+- Laravel >= 10
 - Composer ^2.3 (for [codezero/composer-preload-files](https://github.com/codezero-be/composer-preload-files))
 
 ## ⬆ Upgrade
@@ -159,7 +159,7 @@ Make sure to add it after `StartSession` and before `SubstituteBindings`.
 The order of the middleware is important if you are using localized route keys (translated slugs)!
 The session needs to be active when setting the locale, and the locale needs to be set when substituting the route bindings.
 
-### Laravel 11 and 12:
+### Laravel >= 11:
 
 Add the middleware to the `web` middleware group in `bootstrap/app.php`.
 

@@ -182,7 +182,7 @@ abstract class TestCase extends  BaseTestCase
         return (new Collection(Route::getRoutes()))->filter(function ($route) {
             // Exclude Laravel built-in storage routes added in Laravel 12+
             $name = $route->getName() ?? '';
-            $uri  = $route->uri() ?? '';
+            $uri  = method_exists($route, 'uri') ? ($route->uri() ?? '') : ($route->getUri() ?? '');
 
             return ! str_starts_with($name, 'storage.')
                 && ! str_starts_with($uri, 'storage/');

@@ -169,6 +169,9 @@ abstract class TestCase extends  BaseTestCase
     /**
      * Get the currently registered routes.
      *
+     * Excludes framework-internal routes (e.g. storage.local.upload in Laravel 12+)
+     * to keep route-count assertions stable across Laravel versions.
+     *
      * @return \Illuminate\Support\Collection
      */
     protected function getRoutes(): Collection
@@ -176,7 +179,14 @@ abstract class TestCase extends  BaseTestCase
         // Route::has() doesn't seem to be working
         // when you create routes on the fly.
         // So this is a bit of a workaround...
-        return new Collection(Route::getRoutes());
+        return (new Collection(Route::getRoutes()))->filter(function ($route) {
+            // Exclude Laravel built-in storage routes added in Laravel 12+
+            $name = $route->getName() ?? '';
+            $uri  = $route->uri() ?? '';
+
+            return ! str_starts_with($name, 'storage.')
+                && ! str_starts_with($uri, 'storage/');
+        })->values();
     }
 
     /**

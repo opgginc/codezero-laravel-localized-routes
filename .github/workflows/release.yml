@@ -1,0 +1,54 @@
+# 태그 push 시 자동으로 GitHub Release를 생성하는 워크플로우.
+#
+# 동작 방식:
+# 1. semver 형식의 태그(e.g. 5.1.2)가 push되면 트리거
+# 2. 태그 형식 검증 (bare semver만 허용, v prefix 불가)
+# 3. 직전 릴리즈 이후 커밋/PR 기반으로 release notes 자동 생성
+#
+# 참고: version-bump.yml에서 GITHUB_TOKEN으로 push한 태그는
+# GitHub Actions 보안 정책상 이 워크플로우를 트리거하지 않는다.
+# 따라서 이 워크플로우는 사람이 직접 태그를 push한 경우만 커버한다.
+# version-bump.yml은 자체적으로 릴리즈를 생성한다.
+name: Release
+
+on:
+  push:
+    tags:
+      # GitHub Actions tag filter는 glob 패턴이다 (regex 아님).
+      # [0-9]+는 동작하지 않으므로 [0-9]*를 사용한다.
+      - '[0-9]*.[0-9]*.[0-9]*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate semver tag format
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+
+          # 엄격한 semver 검증: X.Y.Z 형식만 허용 (v prefix, pre-release suffix 불가)
+          if ! [[ "$TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Tag '$TAG' is not valid semver (expected: X.Y.Z). Skipping."
+            exit 1
+          fi
+
+          echo "TAG=$TAG" >> "$GITHUB_ENV"
+          echo "✅ Valid semver tag: $TAG"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # --generate-notes: 직전 릴리즈 이후의 PR/커밋 기반으로
+          # GitHub 네이티브 알고리즘이 release notes를 자동 생성한다.
+          gh release create "$TAG" \
+            --title "$TAG" \
+            --generate-notes

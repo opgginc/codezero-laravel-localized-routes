@@ -94,12 +94,7 @@ final class LocalizedMacroTest extends TestCase
             Route::get('{slug}', function () {});
         });
 
-        $routesArray = Route::getRoutes()->getRoutes();
-
-        // Laravel 12 introduces a new route for storage path. Remove that route from the collection.
-        if (isset($routesArray[0]) && $routesArray[0]->uri === 'storage/{path}') {
-            array_shift($routesArray);
-        }
+        $routesArray = $this->getRoutesArray();
 
         $routeUriArray = array_map(function ($route) {
             return $route->uri;
@@ -124,12 +119,7 @@ final class LocalizedMacroTest extends TestCase
                 ->name('home');
         });
 
-        $routesArray = Route::getRoutes()->getRoutes();
-
-        // Laravel 12 introduces a new route for storage path. Remove that route from the collection.
-        if (isset($routesArray[0]) && $routesArray[0]->uri === 'storage/{path}') {
-            array_shift($routesArray);
-        }
+        $routesArray = $this->getRoutesArray();
 
         $route = $routesArray[0];
         $this->assertEquals('en.home', $route->action['as']);
@@ -154,12 +144,7 @@ final class LocalizedMacroTest extends TestCase
             Route::get('{slug}', function () {});
         });
 
-        $routesArray = Route::getRoutes()->getRoutes();
-
-        // Laravel 12 introduces a new route for storage path. Remove that route from the collection.
-        if (isset($routesArray[0]) && $routesArray[0]->uri === 'storage/{path}') {
-            array_shift($routesArray);
-        }
+        $routesArray = $this->getRoutesArray();
 
         $routeUriArray = array_map(function ($route) {
             return $route->uri;
@@ -184,12 +169,7 @@ final class LocalizedMacroTest extends TestCase
                 ->name('home');
         });
 
-        $routesArray = Route::getRoutes()->getRoutes();
-
-        // Laravel 12 introduces a new route for storage path. Remove that route from the collection.
-        if (isset($routesArray[0]) && $routesArray[0]->uri === 'storage/{path}') {
-            array_shift($routesArray);
-        }
+        $routesArray = $this->getRoutesArray();
 
         $route = $routesArray[0];
         $this->assertEquals('english-domain.com', $route->action['domain']);
@@ -216,12 +196,7 @@ final class LocalizedMacroTest extends TestCase
             Route::get('{slug}', function () {})->name('catch-all');
         });
 
-        $routesArray = Route::getRoutes()->getRoutes();
-
-        // Laravel 12 introduces a new route for storage path. Remove that route from the collection.
-        if (isset($routesArray[0]) && $routesArray[0]->uri === 'storage/{path}') {
-            array_shift($routesArray);
-        }
+        $routesArray = $this->getRoutesArray();
 
         $this->assertCount(4, $routesArray);
 
@@ -262,12 +237,7 @@ final class LocalizedMacroTest extends TestCase
             'supported_locales' => ['en', 'nl', 'de'],
         ]);
 
-        $routesArray = Route::getRoutes()->getRoutes();
-
-        // Laravel 12 introduces a new route for storage path. Remove that route from the collection.
-        if (isset($routesArray[0]) && $routesArray[0]->uri === 'storage/{path}') {
-            array_shift($routesArray);
-        }
+        $routesArray = $this->getRoutesArray();
 
         $this->assertCount(3, $routesArray);
 

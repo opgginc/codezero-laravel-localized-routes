@@ -169,6 +169,9 @@ abstract class TestCase extends  BaseTestCase
     /**
      * Get the currently registered routes.
      *
+     * Excludes framework-internal routes (e.g. storage.local.upload in Laravel 12+)
+     * to keep route-count assertions stable across Laravel versions.
+     *
      * @return \Illuminate\Support\Collection
      */
     protected function getRoutes(): Collection
@@ -176,7 +179,42 @@ abstract class TestCase extends  BaseTestCase
         // Route::has() doesn't seem to be working
         // when you create routes on the fly.
         // So this is a bit of a workaround...
-        return new Collection(Route::getRoutes());
+        return (new Collection(Route::getRoutes()))->filter(function ($route) {
+            return ! $this->isFrameworkRoute($route);
+        })->values();
+    }
+
+    /**
+     * Get the currently registered routes as a plain array,
+     * excluding framework-internal routes (e.g. storage.local.upload in Laravel 12+).
+     *
+     * Use this instead of Route::getRoutes()->getRoutes() in tests that need an indexed array.
+     *
+     * @return array
+     */
+    protected function getRoutesArray(): array
+    {
+        return array_values(array_filter(
+            Route::getRoutes()->getRoutes(),
+            fn ($route) => ! $this->isFrameworkRoute($route)
+        ));
+    }
+
+    /**
+     * Determine whether a route is a Laravel framework-internal route
+     * that should be excluded from test assertions.
+     *
+     * @param  \Illuminate\Routing\Route  $route
+     * @return bool
+     */
+    private function isFrameworkRoute($route): bool
+    {
+        $name = $route->getName() ?? '';
+        // $route->uri is a public property on Illuminate\Routing\Route
+        $uri  = $route->uri ?? '';
+
+        return str_starts_with($name, 'storage.')
+            || str_starts_with($uri,  'storage/');
     }
 
     /**

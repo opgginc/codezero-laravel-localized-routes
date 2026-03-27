@@ -105,6 +105,12 @@ jobs:
             exit 1
           fi
 
+          # 다운그레이드 방지: 새 버전이 최신 태그보다 높은지 확인
+          if [ "$(printf '%s\n' "$LATEST_TAG" "$NEW_VERSION" | sort -V | tail -1)" != "$NEW_VERSION" ]; then
+            echo "::error::New version '$NEW_VERSION' is not greater than current latest '$LATEST_TAG'"
+            exit 1
+          fi
+
           echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
           echo "🚀 New version: $LATEST_TAG → $NEW_VERSION"
 
